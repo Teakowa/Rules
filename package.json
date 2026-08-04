@@ -10,7 +10,11 @@
   },
   "devDependencies": {
     "@types/node": "^22",
+    "@types/yaml": "^1.9.7",
     "typescript": "^5"
   },
-  "packageManager": "pnpm@11.10.0"
+  "packageManager": "pnpm@11.10.0",
+  "dependencies": {
+    "yaml": "^2.9.0"
+  }
 }
