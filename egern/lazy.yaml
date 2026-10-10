@@ -1,0 +1,2127 @@
+ipv6: true
+http_port: 6152
+socks_port: 6153
+allow_external_connections: true
+vif_only: true
+close_connections_on_policy_change: true
+hijack_dns:
+  - 1.0.0.1:53
+  - 1.1.1.1:53
+  - 8.8.4.4:53
+  - 8.8.8.8:53
+geoip_db_url: https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb
+asn_db_url: https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb
+proxy_latency_test_url: https://connectivitycheck.gstatic.com/generate_204
+direct_latency_test_url: http://www.aliyun.com
+udp_latency_test_url: google.com@8.8.8.8
+compat_route: false
+include_all_networks: true
+include_apns: true
+dns:
+  bootstrap:
+    - 223.5.5.5
+    - 119.29.29.29
+  upstreams:
+    Ali:
+      - https://dns.alidns.com/dns-query
+    Tencent:
+      - https://doh.pub/dns-query
+    Google:
+      - https://8.8.8.8/dns-query
+    Domestic:
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+  forward:
+    - domain_wildcard:
+        match: script.hub
+        value: 127.0.0.1
+        disabled: false
+    - domain_wildcard:
+        match: sub.store
+        value: 127.0.0.1
+        disabled: false
+    - proxy_rule_set:
+        match: https://rule.kelee.one/Loon/Tencent.lsr
+        value: Tencent
+        disabled: false
+    - proxy_rule_set:
+        match: https://cdn.jsdelivr.net/gh/Teakowa/cn-dns-module@main/modules/china-domains.egern.yaml
+        value: Domestic
+        disabled: false
+    - domain_wildcard:
+        match: "*.ubi.com"
+        value: Domestic
+        disabled: false
+    - domain_wildcard:
+        match: "*.ubisoft.com"
+        value: Domestic
+    - domain_wildcard:
+        match: "*.andns.co"
+        value: Domestic
+    - domain_wildcard:
+        match: "*.vxtrans.link"
+        value: Domestic
+    - domain_wildcard:
+        match: "*.com.cn"
+        value: Domestic
+    - domain:
+        match: routerlogin.net
+        value: system
+    - domain:
+        match: _hotspot_.m2m
+        value: system
+    - domain:
+        match: router.asus.com
+        value: system
+    - domain:
+        match: hotspot.cslwifi.com
+        value: system
+    - domain:
+        match: amplifi.lan
+        value: system
+    - domain_wildcard:
+        match: "*.lan"
+        value: system
+    - domain_wildcard:
+        match: "*.qpic.cn"
+        value: Domestic
+    - domain_wildcard:
+        match: "*.ihg.com"
+        value: Domestic
+    - domain_wildcard:
+        match: "*.e5421.com"
+        value: Domestic
+    - domain_wildcard:
+        match: "*.samsclub-estore.com"
+        value: Domestic
+    - domain_wildcard:
+        match: "*.creatrip.*"
+        value: 1.2.4.8
+    - domain_wildcard:
+        match: "*.lianhe.art"
+        value: Domestic
+    - domain_wildcard:
+        match: "*"
+        value: Google
+        disabled: false
+  public_ip_lookup_url: https://ifconfig.me/ip
+bypass_tunnel_proxy:
+  - 127.0.0.1
+  - localhost
+  - "*.local"
+  - 192.168.0.0/16
+  - 10.0.0.0/8
+  - 172.16.0.0/12
+  - 100.64.0.0/10
+  - 127.0.0.0/24
+  - "*.crashlytics.com"
+  - "*.test"
+  - "*.wip"
+real_ip_domains:
+  - "*.msftconnecttest.com"
+  - "*.msftncsi.com"
+  - "*.srv.nintendo.net"
+  - "*.stun.playstation.net"
+  - xbox.*.microsoft.com
+  - "*.xboxlive.com"
+  - "*.logon.battlenet.com.cn"
+  - "*.logon.battle.net"
+  - stun.l.google.com
+policy_groups:
+  - external:
+      name: 机场订阅
+      type: select
+      urls:
+        - https://your-subscribe-url/sub
+      hidden: true
+  - select:
+      name: Proxy
+      policies:
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+        - DIRECT
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Proxy.png
+      hidden: false
+  - select:
+      name: Others
+      policies:
+        - Proxy
+        - DIRECT
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Dinosaur.png
+      hidden: false
+  - select:
+      name: AdBlock
+      policies:
+        - REJECT
+        - DIRECT
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png
+      hidden: false
+  - select:
+      name: Apple
+      policies:
+        - DIRECT
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png
+      hidden: false
+  - select:
+      name:  Apple CDN
+      policies:
+        - Apple
+        - DIRECT
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png
+  - select:
+      name: AppleNews
+      policies:
+        -  Apple CDN
+        - Proxy
+        - DIRECT
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_News.png
+      hidden: false
+  - select:
+      name: GlobalTV
+      policies:
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+        - DIRECT
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
+      hidden: false
+  - select:
+      name: Google
+      policies:
+        - Proxy
+        - SG
+        - HK
+        - JP
+        - US
+        - KR
+        - CA
+        - RU
+        - AR
+        - TR
+        - TW
+        - DE
+        - UK
+        - DIRECT
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png
+      hidden: false
+  - select:
+      name: YouTube
+      policies:
+        - GlobalTV
+        - DIRECT
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+      hidden: false
+  - select:
+      name: Spotify
+      policies:
+        - GlobalTV
+        - DIRECT
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png
+      hidden: false
+  - select:
+      name: Netflix
+      policies:
+        - GlobalTV
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix_Letter.png
+      hidden: false
+  - select:
+      name: AsianTV
+      policies:
+        - DIRECT
+        - HK
+        - TW
+        - JP
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Asia_Map.png
+      hidden: false
+  - select:
+      name: Pornhub
+      policies:
+        - GlobalTV
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+        - DIRECT
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Pornhub_1.png
+      hidden: false
+  - select:
+      name: Social Platform
+      policies:
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/X.png
+      hidden: false
+  - select:
+      name: Telegram
+      policies:
+        - US
+        - SG
+        - Proxy
+        - HK
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram_X.png
+      hidden: false
+  - select:
+      name: Line
+      policies:
+        - DIRECT
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Line.png
+      hidden: false
+  - select:
+      name: AI
+      policies:
+        - SG
+        - US
+        - HK
+        - DIRECT
+      flatten: false
+      icon: https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/Claude_02.png
+      hidden: false
+  - select:
+      name: GitHub
+      policies:
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+        - DIRECT
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
+      hidden: false
+  - select:
+      name: Ultra Mobile
+      policies:
+        - US
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cellular.png
+      hidden: false
+  - select:
+      name: OneDrive
+      policies:
+        - SG
+        - HK
+        - DIRECT
+        - JP
+        - US
+        - TW
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png
+      hidden: false
+  - select:
+      name: Microsoft
+      policies:
+        - DIRECT
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+      hidden: false
+  - select:
+      name: Paypal
+      policies:
+        - DIRECT
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/PayPal.png
+      hidden: false
+  - select:
+      name: 游戏平台
+      policies:
+        - DIRECT
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Steam.png
+      hidden: false
+  - select:
+      name: Web3
+      policies:
+        - DIRECT
+        - Proxy
+        - UK
+        - DE
+        - SG
+        - JP
+        - US
+        - KR
+        - HK
+        - TW
+        - TR
+        - AR
+        - RU
+        - CA
+      flatten: false
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Cryptocurrency_2.png
+      hidden: false
+  - select:
+      name: HK
+      policies:
+        - _SUB 🇭🇰 HK
+      flatten: true
+      filter: (?i)(港|HK|Hong|🇭🇰)
+      block_quic: true
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+      hidden: false
+  - select:
+      name: SG
+      policies:
+        - _SUB 🇸🇬 SG
+      flatten: true
+      filter: (?i)(新加坡|SG|🇸🇬)
+      block_quic: true
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+      hidden: false
+  - smart:
+      name: JP
+      policies:
+        - _SUB 🇯🇵 JP
+      flatten: true
+      filter: (?i)(日本|JP|Japan|🇯🇵)
+      block_quic: true
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+      hidden: false
+      priorities:
+        JPS: 0.5
+  - smart:
+      name: US
+      policies:
+        - _SUB 🇺🇸 US
+      flatten: true
+      filter: (?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|🇺🇸)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+      hidden: false
+      priorities:
+        US: 0.2
+  - smart:
+      name: KR
+      policies:
+        - _SUB 🇰🇷 KR
+      flatten: true
+      filter: (?i)(韩|KR|韩国|🇰🇷)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+      hidden: false
+  - smart:
+      name: UK
+      policies:
+        - _SUB 🇬🇧 UK
+      flatten: true
+      filter: (?i)(英|伦敦|UK|🇬🇧)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_Kingdom.png
+      hidden: false
+  - smart:
+      name: DE
+      policies:
+        - _SUB 🇩🇪 DE
+      flatten: true
+      filter: (?i)(德|DE|德国|🇩🇪)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Germany.png
+      hidden: false
+  - smart:
+      name: TW
+      policies:
+        - _SUB 🇹🇼 TW
+      flatten: true
+      filter: (?i)(台|TW|台湾)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+      hidden: false
+  - smart:
+      name: TR
+      policies:
+        - _SUB 🇹🇷 TR
+      flatten: true
+      filter: (?i)(土|土耳其|TR|🇹🇷)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Turkey.png
+      hidden: false
+  - smart:
+      name: AR
+      policies:
+        - _SUB 🇦🇷 AR
+      flatten: true
+      filter: (?i)(阿|阿根廷|AR|🇦🇷)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Argentina.png
+      hidden: false
+  - smart:
+      name: RU
+      policies:
+        - _SUB 🇷🇺 RU
+      flatten: true
+      filter: (?i)(俄|俄罗斯|RU|🇷🇺)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Russia.png
+      hidden: false
+  - smart:
+      name: CA
+      policies:
+        - _SUB 🇨🇦 CA
+      flatten: true
+      filter: (?i)(加拿大|CA|🇨🇦)
+      icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Canada.png
+      hidden: false
+  - external:
+      name: 机场订阅 1
+      type: select
+      urls:
+        - https://your-subscribe-url/sub
+      update_interval: 3600
+      hidden: true
+  - auto_test:
+      name: _SUB 🇭🇰 HK
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(港|HK|Hong|🇭🇰)
+      hidden: true
+  - select:
+      name: _SUB 🇸🇬 SG
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(新加坡|SG|🇸🇬)
+      hidden: true
+  - select:
+      name: _SUB 🇯🇵 JP
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(日本|JP|Japan|🇯🇵)
+      hidden: true
+  - select:
+      name: _SUB 🇺🇸 US
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States|🇺🇸)
+      hidden: true
+  - select:
+      name: _SUB 🇰🇷 KR
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(韩|KR|韩国|🇰🇷)
+      hidden: true
+  - select:
+      name: _SUB 🇬🇧 UK
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(英|伦敦|UK|🇬🇧)
+      hidden: true
+  - select:
+      name: _SUB 🇩🇪 DE
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(德|DE|德国|🇩🇪)
+      hidden: true
+  - select:
+      name: _SUB 🇹🇼 TW
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(台|TW|台湾)
+      hidden: true
+  - select:
+      name: _SUB 🇹🇷 TR
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(土|土耳其|TR|🇹🇷)
+      hidden: true
+  - select:
+      name: _SUB 🇦🇷 AR
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(阿|阿根廷|AR|🇦🇷)
+      hidden: true
+  - select:
+      name: _SUB 🇷🇺 RU
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(俄|俄罗斯|RU|🇷🇺)
+      hidden: true
+  - select:
+      name: _SUB 🇨🇦 CA
+      policies:
+        - 机场订阅
+        - 机场订阅 1
+      flatten: true
+      filter: (?i)(加拿大|CA|🇨🇦)
+      hidden: true
+rules:
+  - domain_keyword:
+      match: push.apple
+      policy: Proxy
+      disabled: false
+  - domain_suffix:
+      match: seagm.com
+      policy: DIRECT
+      disabled: false
+  - domain_suffix:
+      match: workshop.codes
+      policy: Proxy
+      disabled: false
+  - domain_suffix:
+      match: ark.cn-beijing.volces.com
+      policy: DIRECT
+      disabled: false
+  - domain_suffix:
+      match: liangxin.xyz
+      policy: Proxy
+      disabled: false
+  - domain_suffix:
+      match: xn--9kqz23b19z.com
+      policy: Proxy
+      disabled: false
+  - domain_suffix:
+      match: dmit.io
+      policy: Proxy
+      disabled: false
+  - domain_suffix:
+      match: ip-api.com
+      policy: Proxy
+      disabled: false
+  - domain_suffix:
+      match: kelee.one
+      policy: Proxy
+      disabled: false
+  - domain_suffix:
+      match: ingest.sentry.io
+      policy: AdBlock
+      disabled: false
+  - domain_suffix:
+      match: evoxt.com
+      policy: JP
+      disabled: false
+  - domain_suffix:
+      match: vmiss.com
+      policy: JP
+      disabled: false
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/OKX/OKX.yaml
+      policy: Web3
+      disabled: false
+  - domain_suffix:
+      match: mozilla.net
+      policy: GitHub
+  - ip_cidr:
+      match: 74.222.3.60/32
+      policy: Pornhub
+      no_resolve: true
+  - domain_suffix:
+      match: e-hentai.org
+      policy: Pornhub
+  - domain_suffix:
+      match: fansone.co
+      policy: Pornhub
+  - domain_suffix:
+      match: a1.art
+      policy: Pornhub
+  - domain_suffix:
+      match: pixai.art
+      policy: Pornhub
+  - domain_suffix:
+      match: example.com
+      policy: REJECT
+  - domain_suffix:
+      match: perplexity.ai
+      policy: AI
+  - domain_suffix:
+      match: perplexity.com
+      policy: AI
+  - domain_suffix:
+      match: ios.ngp.prod.cloud.netflix.com
+      policy: REJECT
+  - domain_suffix:
+      match: ios.prod.cloud.netflix.com
+      policy: REJECT
+  - domain_suffix:
+      match: appboot.netflix.com
+      policy: REJECT
+  - domain_suffix:
+      match: 1069boys.xyz
+      policy: Pornhub
+  - domain_suffix:
+      match: 1069boys.net
+      policy: Pornhub
+  - domain_suffix:
+      match: dash.cloudflare.com
+      policy: HK
+  - domain_suffix:
+      match: meituan.net
+      policy: DIRECT
+  - domain_suffix:
+      match: brew.sh
+      policy: GitHub
+  - domain_suffix:
+      match: callofduty.com
+      policy: 游戏平台
+  - domain_suffix:
+      match: activision.com
+      policy: 游戏平台
+  - domain_suffix:
+      match: afdian.com
+      policy: DIRECT
+  - ip_cidr:
+      match: 107.172.112.91/32
+      policy: HK
+      no_resolve: true
+  - ip_cidr:
+      match: 178.239.123.161/32
+      policy: HK
+      no_resolve: true
+  - ip_cidr:
+      match: 107.175.39.150/32
+      policy: HK
+      no_resolve: true
+  - domain_suffix:
+      match: polymarket.com
+      policy: HK
+  - domain_suffix:
+      match: infini.money
+      policy: Web3
+  - domain_suffix:
+      match: byabcd.com
+      policy: Web3
+  - domain_keyword:
+      match: bitget
+      policy: Web3
+  - domain_suffix:
+      match: bitget.com
+      policy: Web3
+  - domain_suffix:
+      match: bitkeep.app
+      policy: Web3
+  - domain_suffix:
+      match: bitgetapps.com
+      policy: Web3
+  - domain_suffix:
+      match: bitgetimg.com
+      policy: Web3
+  - domain_suffix:
+      match: ffbbbdc6d3c353211fe2ba39c9f744cd.com
+      policy: Web3
+  - domain_suffix:
+      match: byapps.net
+      policy: Web3
+  - domain_suffix:
+      match: bycsi.com
+      policy: Web3
+  - domain_suffix:
+      match: bybit.org
+      policy: Web3
+  - domain_suffix:
+      match: ingest.us.sentry.io
+      policy: REJECT
+  - domain_suffix:
+      match: unityads.unity3d.com
+      policy: REJECT
+  - domain_suffix:
+      match: 4horlover.com
+      policy: Pornhub
+  - domain_suffix:
+      match: seagm.com
+      policy: 游戏平台
+  - domain_suffix:
+      match: cursor.sh
+      policy: AI
+  - domain_suffix:
+      match: linux.do
+      policy: DIRECT
+  - domain_suffix:
+      match: bsky.network
+      policy: Social Platform
+  - domain_suffix:
+      match: bsky.app
+      policy: Social Platform
+  - domain_suffix:
+      match: remini.ai
+      policy: Proxy
+  - domain_suffix:
+      match: tunecore.com
+      policy: Proxy
+  - domain_suffix:
+      match: helpdesk.bytedance.com
+      policy: DIRECT
+  - domain_suffix:
+      match: gvdb.org
+      policy: US
+  - domain_suffix:
+      match: believemusic.com
+      policy: Spotify
+  - domain_suffix:
+      match: suno.com
+      policy: AI
+  - domain_suffix:
+      match: suno.ai
+      policy: AI
+  - domain:
+      match: challenges.cloudflare.com
+      policy: Proxy
+  - domain_suffix:
+      match: bybit.biz
+      policy: Web3
+  - domain_suffix:
+      match: byd3c3.com
+      policy: Web3
+  - domain_suffix:
+      match: bybdc6.com
+      policy: JP
+  - domain_suffix:
+      match: byabcde.com
+      policy: Web3
+  - domain_suffix:
+      match: bytick.com
+      policy: JP
+  - domain_suffix:
+      match: bybitglobal.com
+      policy: JP
+  - domain_suffix:
+      match: bybit.com
+      policy: Web3
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Pixiv/Pixiv.list
+      policy: Pornhub
+      update_interval: 86400
+  - domain_suffix:
+      match: wargaming.net
+      policy: 游戏平台
+  - domain_suffix:
+      match: boyfriendtv.com
+      policy: Pornhub
+  - domain_suffix:
+      match: us.forums.blizzard.com
+      policy: HK
+  - domain_suffix:
+      match: emule-security.org
+      policy: Web3
+  - domain_suffix:
+      match: worldofwarships.asia
+      policy: 游戏平台
+  - domain_suffix:
+      match: wynd.network
+      policy: Web3
+  - domain_suffix:
+      match: bigdatacloud.net
+      policy: Web3
+  - domain_suffix:
+      match: getgrass.io
+      policy: Web3
+  - domain_suffix:
+      match: us-west-2.amazonaws.com
+      policy: US
+  - domain_suffix:
+      match: korabli.su
+      policy: 游戏平台
+  - domain_suffix:
+      match: film911.net
+      policy: Pornhub
+  - domain_suffix:
+      match: openai.com
+      policy: AI
+  - ip_cidr:
+      match: 38.49.38.208/32
+      policy: GitHub
+      no_resolve: true
+  - domain_suffix:
+      match: ageofmagic.akamaized.net
+      policy: 游戏平台
+  - domain_suffix:
+      match: flowgpt.com
+      policy: AI
+  - domain_suffix:
+      match: openapi.aliyundrive.com
+      policy: DIRECT
+  - domain_suffix:
+      match: vas-lf-x.snssdk.com
+      policy: REJECT
+  - domain:
+      match: veai-models.topazlabs.com
+      policy: DIRECT
+  - ip_cidr:
+      match: 0.0.0.0/32
+      policy: REJECT
+      no_resolve: true
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Lan/Lan.list
+      policy: DIRECT
+      update_interval: 86400
+  - domain:
+      match: dl1.ownfile.net
+      policy: Proxy
+  - domain_suffix:
+      match: playkot.com
+      policy: 游戏平台
+  - domain_suffix:
+      match: oaiusercontent.com
+      policy: AI
+  - domain_suffix:
+      match: oaistatic.com
+      policy: AI
+  - domain_suffix:
+      match: lesta.ru
+      policy: 游戏平台
+  - domain_suffix:
+      match: anbinliang.f3322.net
+      policy: DIRECT
+  - domain_suffix:
+      match: fatwhgat.com
+      policy: REJECT
+  - domain_suffix:
+      match: quicktype.io
+      policy: GitHub
+  - domain_suffix:
+      match: ssm.fun
+      policy: Pornhub
+  - domain_keyword:
+      match: makersuite
+      policy: US
+  - domain_suffix:
+      match: makersuite.google.com
+      policy: US
+  - domain_keyword:
+      match: starbucks
+      policy: DIRECT
+  - domain_suffix:
+      match: getsentry.net
+      policy: US
+  - domain_suffix:
+      match: sentry.io
+      policy: Proxy
+  - domain:
+      match: apps.admob.com
+      policy: Proxy
+  - domain_suffix:
+      match: aiva.ai
+      policy: AI
+  - domain_suffix:
+      match: docofcard.com
+      policy: Proxy
+  - domain_keyword:
+      match: stripe
+      policy: AI
+  - domain_suffix:
+      match: godaddy.com
+      policy: Proxy
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/LinkedIn/LinkedIn.list
+      policy: HK
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/cncidr.txt
+      policy: DIRECT
+      update_interval: 86400
+  - domain_suffix:
+      match: gov.ee
+      policy: DIRECT
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/ViuTV/ViuTV.list
+      policy: HK
+      update_interval: 86400
+  - domain:
+      match: openaidev.ghost.io
+      policy: US
+  - domain_suffix:
+      match: identrust.com
+      policy: AI
+  - domain_suffix:
+      match: wise.com
+      policy: Proxy
+  - domain_suffix:
+      match: kink.com
+      policy: Pornhub
+  - domain_suffix:
+      match: kinkmen.com
+      policy: Pornhub
+  - domain_suffix:
+      match: vitejs.dev
+      policy: Proxy
+  - domain_suffix:
+      match: riotgames.com
+      policy: US
+  - domain_suffix:
+      match: jp
+      policy: JP
+  - ip_cidr:
+      match: 43.154.76.214/32
+      policy: DIRECT
+      no_resolve: true
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Zendesk/Zendesk.list
+      policy: Proxy
+      update_interval: 86400
+  - domain_suffix:
+      match: hiccears.com
+      policy: Pornhub
+  - domain_suffix:
+      match: xnxk.com
+      policy: DIRECT
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Tencent/Tencent.list
+      policy: DIRECT
+      update_interval: 86400
+  - domain_keyword:
+      match: -cn
+      policy: DIRECT
+  - domain_suffix:
+      match: trip.com
+      policy: DIRECT
+  - domain_suffix:
+      match: vsco.co
+      policy: SG
+  - domain_suffix:
+      match: gandi.net
+      policy: GitHub
+  - domain_suffix:
+      match: gcsip.com
+      policy: DIRECT
+  - domain_suffix:
+      match: campaignmonitor.com
+      policy: Proxy
+  - domain_suffix:
+      match: ui.com
+      policy: DIRECT
+  - domain_suffix:
+      match: twilio.com
+      policy: JP
+  - domain:
+      match: dl-origin.ubnt.com
+      policy: US
+  - ip_cidr:
+      match: 101.132.96.154/32
+      policy: Proxy
+      no_resolve: true
+  - domain_suffix:
+      match: lianhe.art
+      policy: DIRECT
+  - domain_suffix:
+      match: sketch.com
+      policy: Proxy
+  - domain_suffix:
+      match: crates.io
+      policy: Proxy
+  - domain_suffix:
+      match: blobstore.apple.com
+      policy:  Apple CDN
+  - domain_suffix:
+      match: video-ssl.itunes.apple.com
+      policy:  Apple CDN
+  - domain_suffix:
+      match: aodp-ssl.apple.com
+      policy:  Apple CDN
+  - domain_suffix:
+      match: itsliveradio.apple.com
+      policy:  Apple CDN
+  - url_regex:
+      match: https://music.apple.com/hk
+      policy: HK
+  - url_regex:
+      match: https://music.apple.com/us
+      policy: US
+  - url_regex:
+      match: https://music.apple.com/cn
+      policy: DIRECT
+  - domain_suffix:
+      match: mtteve.beacon.qq.com
+      policy: REJECT
+  - domain_suffix:
+      match: ios.llc
+      policy: DIRECT
+  - domain_suffix:
+      match: ihg.com
+      policy: DIRECT
+  - ip_cidr:
+      match: 124.156.103.183/32
+      policy: DIRECT
+      no_resolve: true
+  - domain_suffix:
+      match: i18n-pglstatp.com
+      policy: DIRECT
+  - domain_suffix:
+      match: pangle.io
+      policy: DIRECT
+  - domain_suffix:
+      match: miao.li
+      policy: DIRECT
+  - domain_suffix:
+      match: rfa.org
+      policy: Proxy
+  - domain:
+      match: registry.serverless.com
+      policy: DIRECT
+  - domain_suffix:
+      match: serverless.com
+      policy: Proxy
+  - domain_suffix:
+      match: battle.net
+      policy: 游戏平台
+  - domain:
+      match: activate.navicat.com
+      policy: REJECT
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Apple/Apple.list
+      policy: Apple
+      update_interval: 86400
+  - user_agent:
+      match: 地图*
+      policy: DIRECT
+  - user_agent:
+      match: 设置*
+      policy: DIRECT
+  - user_agent:
+      match: com.apple.geod*
+      policy: DIRECT
+  - domain:
+      match: apps.apple.com
+      policy: Apple
+  - domain:
+      match: xp.apple.com
+      policy: Apple
+  - domain:
+      match: bag.itunes.apple.com
+      policy: Apple
+  - domain:
+      match: api-edge.apps.apple.com
+      policy: Apple
+  - domain:
+      match: api.apps.apple.com
+      policy: Apple
+  - domain:
+      match: play.itunes.apple.com
+      policy: Apple
+  - domain:
+      match: se.itunes.apple.com
+      policy: Apple
+  - domain:
+      match: se-edge.itunes.apple.com
+      policy: Apple
+  - domain:
+      match: su.itunes.apple.com
+      policy: Apple
+  - domain:
+      match: upp.itunes.apple.com
+      policy: Apple
+  - domain:
+      match: beta.music.apple.com
+      policy: Apple
+  - domain:
+      match: iosapps.itunes.apple.com
+      policy:  Apple CDN
+  - domain:
+      match: osxapps.itunes.apple.com
+      policy:  Apple CDN
+  - domain:
+      match: supportdownload.apple.com
+      policy:  Apple CDN
+  - domain:
+      match: appldnld.apple.com
+      policy:  Apple CDN
+  - domain:
+      match: swcdn.apple.com
+      policy:  Apple CDN
+  - domain:
+      match: apptrailers.itunes.apple.com
+      policy:  Apple CDN
+  - domain:
+      match: updates-http.cdn-apple.com
+      policy:  Apple CDN
+  - domain_suffix:
+      match: mzstatic.com
+      policy:  Apple CDN
+  - domain_suffix:
+      match: hls.itunes.apple.com
+      policy: Proxy
+  - domain_suffix:
+      match: hls-amt.itunes.apple.com
+      policy: Proxy
+  - domain_suffix:
+      match: audio-ssl.itunes.apple.com
+      policy: Proxy
+  - domain_suffix:
+      match: cdn-apple.com
+      policy: Proxy
+  - domain:
+      match: cdn.apple-cloudkit.com
+      policy: Proxy
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/AppleDev/AppleDev.list
+      policy: Proxy
+      update_interval: 86400
+  - domain:
+      match: api.smoot.apple.com
+      policy: DIRECT
+  - domain:
+      match: captive.apple.com
+      policy: DIRECT
+  - domain:
+      match: configuration.apple.com
+      policy: DIRECT
+  - domain:
+      match: guzzoni.apple.com
+      policy: DIRECT
+  - domain:
+      match: smp-device-content.apple.com
+      policy: DIRECT
+  - domain:
+      match: aod.itunes.apple.com
+      policy: DIRECT
+  - domain:
+      match: api.smoot.apple.cn
+      policy: DIRECT
+  - domain:
+      match: gs-loc.apple.com
+      policy: DIRECT
+  - domain:
+      match: mvod.itunes.apple.com
+      policy: DIRECT
+  - domain:
+      match: streamingaudio.itunes.apple.com
+      policy:  Apple CDN
+  - domain:
+      match: reserve-prime.apple.com
+      policy: DIRECT
+  - domain_suffix:
+      match: ess.apple.com
+      policy: DIRECT
+  - domain_suffix:
+      match: push-apple.com.akadns.net
+      policy: DIRECT
+  - domain_suffix:
+      match: push.apple.com
+      policy: DIRECT
+  - domain_suffix:
+      match: music.apple.com
+      policy: DIRECT
+  - domain_suffix:
+      match: ls.apple.com
+      policy: DIRECT
+  - domain_suffix:
+      match: lcdn-locator.apple.com
+      policy: DIRECT
+  - domain_suffix:
+      match: lcdn-registration.apple.com
+      policy: DIRECT
+  - domain_suffix:
+      match: aaplimg.com
+      policy: Apple
+  - domain_suffix:
+      match: apple.co
+      policy: Proxy
+  - domain_suffix:
+      match: itunes.com
+      policy: Apple
+  - domain_suffix:
+      match: itunes.apple.com
+      policy: Apple
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/iCloud/iCloud.list
+      policy: Apple
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/apple.txt
+      policy: Apple
+      update_interval: 86400
+  - domain_suffix:
+      match: ocsp.apple.com
+      policy: Proxy
+  - domain_suffix:
+      match: konami.net
+      policy: Proxy
+  - ip_cidr:
+      match: 182.254.116.0/24
+      policy: DIRECT
+      no_resolve: true
+  - domain_suffix:
+      match: kkmh.com
+      policy: DIRECT
+  - domain_suffix:
+      match: weverse.io
+      policy: GlobalTV
+  - domain_suffix:
+      match: bandcamp.com
+      policy: KR
+  - domain_suffix:
+      match: daumcdn.net
+      policy: KR
+  - domain_suffix:
+      match: daum.net
+      policy: KR
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/TelegramSG/TelegramSG.list
+      policy: SG
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/TelegramUS/TelegramUS.list
+      policy: US
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Telegram/Telegram.list
+      policy: Telegram
+      update_interval: 86400
+  - rule_set:
+      match: https://ruleset.skk.moe/List/non_ip/telegram.conf
+      policy: Telegram
+      update_interval: 86400
+      disabled: true
+  - rule_set:
+      match: https://ruleset.skk.moe/List/ip/telegram.conf
+      policy: Telegram
+      update_interval: 86400
+      disabled: true
+  - rule_set:
+      match: https://ruleset.skk.moe/List/ip/telegram_asn.conf
+      policy: Telegram
+      update_interval: 86400
+  - domain_suffix:
+      match: tapngo.com.hk
+      policy: DIRECT
+  - domain_suffix:
+      match: standardchartered.com
+      policy: DIRECT
+  - domain_suffix:
+      match: baramangaonline.com
+      policy: Pornhub
+  - domain_suffix:
+      match: gaysex.net
+      policy: Pornhub
+  - domain_suffix:
+      match: v2ex.com
+      policy: Proxy
+  - domain_suffix:
+      match: beatstars.com
+      policy: Proxy
+  - domain_suffix:
+      match: e5421.com
+      policy: DIRECT
+  - domain_suffix:
+      match: us.shop.battle.net
+      policy: DIRECT
+  - domain_suffix:
+      match: maxmind.com
+      policy: DIRECT
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Linguee/Linguee.list
+      policy: AI
+      update_interval: 86400
+  - rule_set:
+      match: https://github.com/blackmatrix7/ios_rule_script/raw/refs/heads/master/rule/Surge/Python/Python.list
+      policy: GitHub
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/OneDrive/OneDrive.list
+      policy: OneDrive
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Copilot/Copilot.list
+      policy: AI
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Reddit/Reddit.list
+      policy: AI
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Binance/Binance.list
+      policy: SG
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Discord/Discord.list
+      policy: Social Platform
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Epic/Epic.list
+      policy: 游戏平台
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Microsoft/Microsoft.list
+      policy: Microsoft
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Steam/Steam.list
+      policy: 游戏平台
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Line/Line.list
+      policy: Line
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/ACL4SSR/ACL4SSR@master/Clash/Ruleset/Line.list
+      policy: Line
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/Teakowa/Surge@master/UltraMobile.list
+      policy: Ultra Mobile
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/OpenAI/OpenAI.list
+      policy: AI
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Claude/Claude.list
+      policy: AI
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/TikTok/TikTok.list
+      policy: US
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/PayPal/PayPal.list
+      policy: Paypal
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/OKX/OKX.list
+      policy: Web3
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/HBO/HBO.list
+      policy: GlobalTV
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/HBOAsia/HBOAsia.list
+      policy: HK
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Twitch/Twitch.list
+      policy: GlobalTV
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Xbox/Xbox.list
+      policy: 游戏平台
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/GitHub/GitHub.list
+      policy: GitHub
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/UBI/UBI.list
+      policy: 游戏平台
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Loon/Atlassian/Atlassian.list
+      policy: Proxy
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Instagram/Instagram.list
+      policy: Social Platform
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Twitter/Twitter.list
+      policy: Social Platform
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/KakaoTalk/KakaoTalk.list
+      policy: KR
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Teams/Teams.list
+      policy: Microsoft
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Spotify/Spotify.list
+      policy: Spotify
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/AppleTV/AppleTV.list
+      policy: GlobalTV
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Disney/Disney.list
+      policy: GlobalTV
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/SoundCloud/SoundCloud.list
+      policy: GlobalTV
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Netflix/Netflix.list
+      policy: Netflix
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/YouTube/YouTube.list
+      policy: YouTube
+      update_interval: 86400
+  - domain:
+      match: heic.alicdn.com
+      policy: AdBlock
+  - domain_suffix:
+      match: h-adashx.ut.taobao.com
+      policy: AdBlock
+  - domain_keyword:
+      match: ingest.sentry.io
+      policy: AdBlock
+  - ip_cidr:
+      match: 149.88.82.119/32
+      policy: AdBlock
+      no_resolve: true
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Pinduoduo/Pinduoduo.list
+      policy: AdBlock
+      update_interval: 86400
+  - domain_suffix:
+      match: disney.my.sentry.io
+      policy: AdBlock
+  - domain_suffix:
+      match: o2cdn.icu
+      policy: AdBlock
+  - domain_suffix:
+      match: al-3.tianti.com
+      policy: AdBlock
+  - domain_suffix:
+      match: sigmob.cn
+      policy: AdBlock
+  - domain:
+      match: pinyin.sogou.com
+      policy: AdBlock
+  - domain_suffix:
+      match: zhangyue01.com
+      policy: AdBlock
+  - domain_suffix:
+      match: ireader.com
+      policy: AdBlock
+  - domain_suffix:
+      match: kadewn.cn
+      policy: AdBlock
+  - domain_suffix:
+      match: pumamall.cn
+      policy: AdBlock
+  - domain_suffix:
+      match: szsdjscl.cn
+      policy: AdBlock
+  - domain_suffix:
+      match: fishkiyo.cn
+      policy: AdBlock
+  - domain_suffix:
+      match: jxmzyg.com
+      policy: AdBlock
+  - domain_suffix:
+      match: 2m72.xyz
+      policy: AdBlock
+  - domain_suffix:
+      match: ccow888.com
+      policy: AdBlock
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/Loyalsoldier/surge-rules@release/ruleset/reject.txt
+      policy: AdBlock
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Advertising/Advertising.list
+      policy: AdBlock
+      update_interval: 86400
+  - domain_suffix:
+      match: facebook.com
+      policy: AdBlock
+  - domain_suffix:
+      match: oia.zhihu.com
+      policy: AdBlock
+  - user_agent:
+      match: AVOS*
+      policy: REJECT
+  - url_regex:
+      match: https://www.zhihu.com/api/v4/mcn/
+      policy: REJECT
+  - url_regex:
+      match: https://api.zhihu.com/(ab|adx|xen|drama|fringe|zst|commercial|ad-style-service|market/popover|search/(top|tab|preset)|.*(guide|recommendations|extended|featured-comment-ad))
+      policy: REJECT
+  - and:
+      match:
+        - user_agent:
+            match: osee2*
+        - not:
+            match:
+              domain_suffix:
+                match: zhihu.com
+        - not:
+            match:
+              domain_suffix:
+                match: zhimg.com
+      policy: REJECT
+  - user_agent:
+      match: Weibo intl*
+      policy: AdBlock
+  - domain_keyword:
+      match: admusic
+      policy: AdBlock
+  - url_regex:
+      match: https?://interface.music.163.com/eapi/(ad|abtest|sp|hot|mlivestream|store|mlog|search/(specialkeyword|defaultkeyword|hot))
+      policy: REJECT
+  - and:
+      match:
+        - user_agent:
+            match: 网易云音乐*
+        - not:
+            match:
+              domain_suffix:
+                match: music.126.net
+      policy: REJECT
+  - url_regex:
+      match: https://api.zhihu.com/(ab|fringe|zst|commercial|ad-style-service|topstory/hot-lists|market/popover|search/(top|tab|preset)|.*(recommendations|featured-comment-ad))
+      policy: REJECT
+  - and:
+      match:
+        - user_agent:
+            match: osee2*
+        - not:
+            match:
+              domain:
+                match: api.zhihu.com
+        - not:
+            match:
+              domain:
+                match: link.zhihu.com
+        - not:
+            match:
+              domain:
+                match: lens.zhihu.com
+        - not:
+            match:
+              domain:
+                match: www.zhihu.com
+        - not:
+            match:
+              domain_suffix:
+                match: zhimg.com
+      policy: REJECT
+  - url_regex:
+      match: https://app.bilibili.com/(pgc/season/rank/cn|x/v2/(rank.*rid=(168|5)|search/(defaultword|hot|recommend|resource)))
+      policy: REJECT
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Google/Google.list
+      policy: Google
+      update_interval: 86400
+      disabled: false
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/GoogleFCM/GoogleFCM.list
+      policy: Google
+      update_interval: 86400
+      disabled: false
+  - domain:
+      match: daily-cloudcode-pa.sandbox.googleapis.com
+      policy: Google
+  - domain:
+      match: daily-cloudcode-pa.googleapis.com
+      policy: Google
+  - domain:
+      match: oauth2.googleapis.com
+      policy: Google
+  - domain:
+      match: api.antigravity.google
+      policy: Google
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Starbucks/Starbucks.list
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/ChinaMedia/ChinaMedia.list
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/China/China.list
+      policy: DIRECT
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Proxy/Proxy_All_No_Resolve.list
+      policy: Proxy
+      update_interval: 86400
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/metowolf/Surge@master/RULE-SET/torrent.list
+      policy: DIRECT
+      update_interval: 86400
+  - domain_keyword:
+      match: announce
+      policy: DIRECT
+  - domain_keyword:
+      match: torrent
+      policy: DIRECT
+  - domain_keyword:
+      match: tracker
+      policy: DIRECT
+  - domain_suffix:
+      match: smtp
+      policy: DIRECT
+  - url_regex:
+      match: (Subject|HELO|SMTP)
+      policy: DIRECT
+  - rule_set:
+      match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/ChinaASN/ChinaASN_Resolve.list
+      policy: DIRECT
+      update_interval: 86400
+  - or:
+      match:
+        - rule_set:
+            match: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Surge/Lan/Lan.list
+        - geoip:
+            match: CN
+      policy: DIRECT
+  - protocol:
+      match: stun
+      policy: REJECT
+  - default:
+      policy: Others
+url_rewrites:
+  - match: ^http?:\/\/(store.)?steampowered\.com\/
+    location: https://store.steampowered.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?(g|google)\.cn
+    location: https://www.google.com
+    status_code: 302
+  - match: ^https?:\/\/(www.)?taobao\.com\/
+    location: https://taobao.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?jd\.com\/
+    location: https://www.jd.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?mi\.com\/
+    location: https://www.mi.com/
+    status_code: 302
+  - match: ^https?:\/\/you\.163\.com\/
+    location: https://you.163.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?suning\.com/
+    location: https://suning.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?yhd\.com
+    location: https://yhd.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?ign\.xn--fiqs8s\/
+    location: http://cn.ign.com/ccpref/us
+    status_code: 302
+  - match: ^https?:\/\/(www.)?abbyychina\.com\/
+    location: http://www.abbyy.cn/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?bartender\.cc\/
+    location: https://cn.seagullscientific.com
+    status_code: 302
+  - match: ^https?:\/\/(www.)?betterzip\.net\/
+    location: https://macitbetter.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?beyondcompare\.cc\/
+    location: https://www.scootersoftware.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?bingdianhuanyuan\.cn\/
+    location: http://www.faronics.com/zh-hans/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?chemdraw\.com\.cn\/
+    location: http://www.cambridgesoft.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?codesoftchina\.com\/
+    location: https://www.teklynx.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?coreldrawchina\.com\/
+    location: https://www.coreldraw.com/cn/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?crossoverchina\.com\/
+    location: https://www.codeweavers.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?easyrecoverychina\.com\/
+    location: https://www.ontrack.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?ediuschina\.com\/
+    location: https://www.grassvalley.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?flstudiochina\.com\/
+    location: https://www.image-line.com/flstudio/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?formysql\.com\/
+    location: https://www.navicat.com.cn
+    status_code: 302
+  - match: ^https?:\/\/(www.)?guitarpro\.cc\/
+    location: https://www.guitar-pro.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?huishenghuiying\.com\.cn\/
+    location: https://www.corel.com/cn/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?iconworkshop\.cn\/
+    location: https://www.axialis.com/iconworkshop/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?imindmap\.cc\/
+    location: https://imindmap.com/zh-cn/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?jihehuaban\.com\.cn\/
+    location: https://sketch.io/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?keyshot\.cc\/
+    location: https://www.keyshot.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?mathtype\.cn\/
+    location: http://www.dessci.com/en/products/mathtype/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?mindmanager\.cc\/
+    location: https://www.mindjet.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?mindmapper\.cc\/
+    location: https://mindmapper.com
+    status_code: 302
+  - match: ^https?:\/\/(www.)?mycleanmymac\.com\/
+    location: https://macpaw.com/cleanmymac
+    status_code: 302
+  - match: ^https?:\/\/(www.)?nicelabel\.cc\/
+    location: https://www.nicelabel.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?ntfsformac\.cc\/
+    location: https://www.tuxera.com/products/tuxera-ntfs-for-mac-cn/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?ntfsformac\.cn\/
+    location: https://www.paragon-software.com/ufsdhome/zh/ntfs-mac/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?overturechina\.com\/
+    location: https://sonicscores.com/overture/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?passwordrecovery\.cn\/
+    location: https://cn.elcomsoft.com/aopr.html
+    status_code: 302
+  - match: ^https?:\/\/(www.)?pdfexpert\.cc\/
+    location: https://pdfexpert.com/zh
+    status_code: 302
+  - match: ^https?:\/\/(www.)?ultraiso\.net\/
+    location: https://cn.ezbsystems.com/ultraiso/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?vegaschina\.cn\/
+    location: https://www.vegas.com/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?xmindchina\.net\/
+    location: https://www.xmind.cn/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?xshellcn\.com\/
+    location: https://www.netsarang.com/products/xsh_overview.html
+    status_code: 302
+  - match: ^https?:\/\/(www.)?yuanchengxiezuo\.com\/
+    location: https://www.teamviewer.com/zhcn/
+    status_code: 302
+  - match: ^https?:\/\/(www.)?zbrushcn\.com\/
+    location: http://pixologic.com/
+    status_code: 302
+  - match: ^https?:\/\/factorioprints\.com
+    location: https://www.factorio.school
+    status_code: 302
+  - match: ^https?:\/\/geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz
+    location: https://codeload.github.com/Dreamacro/maxmind-geoip/tar.gz/20200204
+    status_code: 302
+header_rewrites:
+  - replace:
+      match: ^guoxudong.io
+      name: User-Agent
+      value: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.45 Safari/537.36
+      type: request
+  - delete:
+      match: ^*.bdimg.com
+      name: Referer
+      type: request
+  - replace:
+      match: ^*.qpic.cn
+      name: User-Agent
+      value: WeChat/6.5.22.32 CFNetwork/889.9 Darwin/17.2.0
+      type: request
+  - delete:
+      match: ^*.qpic.cn
+      name: Referer
+      type: request
+  - delete:
+      match: ^*.ph.126.net
+      name: Referer
+      type: request
+  - delete:
+      match: ^*.zhimg.com
+      name: Referer
+      type: request
+  - replace:
+      match: ^https?://www.zhihu.com/question/
+      name: User-Agent
+      value: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.45 Safari/537.36
+      type: request
+  - delete:
+      match: ^*.cnbetacdn.com
+      name: Referer
+      type: request
+  - delete:
+      match: ^*.zhiding.cn
+      name: Referer
+      type: request
+  - delete:
+      match: ^*.c114.com.cn
+      name: Referer
+      type: request
+  - delete:
+      match: ^https?://www.biquge.com.tw
+      name: Cookie
+      type: request
+http_captures:
+  includes:
+    - cdn.ssm.fun
+  excludes:
+    - "*ca.iadsdk.apple.com"
+    - "*gateway.icloud.com"
+modules:
+  - url: https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/GitRawAutoCDN/surge.sgmodule
+    enabled: true
+    icon: https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/github_01.png
+  - url: https://raw.githubusercontent.com/githubdulong/Script/master/Surge/jd_price.sgmodule
+    compat_arguments:
+      MMMCK_SCRIPT: "#"
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Official/%E5%B9%BF%E5%91%8A%E8%81%94%E7%9B%9F.official.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/startup/startup.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Surge/Module/FanQieNovel.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Beta/%E5%B0%8F%E8%9A%95%E9%9C%B8%E7%8E%8B%E9%A4%90%E5%8E%BB%E5%B9%BF%E5%91%8A.beta.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Beta/%E7%95%AA%E8%8C%84%E5%B0%8F%E8%AF%B4%E5%8E%BB%E5%B9%BF%E5%91%8A.beta.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Beta/%E6%8E%8C%E4%B8%8A%E8%8B%B1%E9%9B%84%E8%81%94%E7%9B%9F%E5%8E%BB%E5%B9%BF%E5%91%8A.beta.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Beta/%E5%BD%A9%E4%BA%91%E5%A4%A9%E6%B0%94%E5%8E%BB%E5%B9%BF%E5%91%8A.beta.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Beta/Spotify%E5%8E%BB%E5%B9%BF%E5%91%8A.beta.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Beta/%E5%B9%BF%E5%91%8A%E5%B9%B3%E5%8F%B0%E6%8B%A6%E6%88%AA%E5%99%A8.beta.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/zheye/zheye.sgmodule
+    enabled: true
+  - url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rewrite/Surge/Upgrade/Upgrade.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/QQ%E9%9F%B3%E4%B9%90%E5%8E%BB%E5%B9%BF%E5%91%8A.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/%E5%BF%AB%E7%9C%8B%E6%BC%AB%E7%94%BB%E5%8E%BB%E5%B9%BF%E5%91%8A.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/%E6%B1%BD%E6%B0%B4%E9%9F%B3%E4%B9%90%E5%8E%BB%E5%B9%BF%E5%91%8A.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/KOOK%E5%8E%BB%E5%B9%BF%E5%91%8A.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/Keywos/rule/main/script/baidu_index/bd.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Official/Reddit%20%E5%8E%BB%E5%B9%BF%E5%91%8A.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/zqzess/rule_for_quantumultX/master/Surge/Module/AdBlock.sgmodule
+    enabled: true
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/AdBlack.png
+  - url: https://github.com/fmz200/wool_scripts/raw/main/Surge/module/split/partX/Xiaohongshu.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/fmz200/wool_scripts/main/Surge/module/weibo.module
+    enabled: true
+  - url: https://github.com/fmz200/wool_scripts/raw/refs/heads/main/Surge/module/blockAds.module
+    enabled: true
+  - url: https://raw.githubusercontent.com/zZpiglet/Task/master/UnblockURLinWeChat.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/curtinp118/Surge5/main/modules/v2ex.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.module
+    enabled: true
+  - url: https://raw.githubusercontent.com/mieqq/mieqq/master/skip-proxy-lists.sgmodule
+    enabled: true
+  - url: https://raw.githubusercontent.com/limbopro/Profiles4limbo/main/Surge/Google.sgmodule
+    enabled: true
+  - url: https://cdn.jsdelivr.net/gh/Teakowa/cn-dns-module@main/modules/cn-dns.egern.module.yaml
+    enabled: true
+  - url: https://github.com/NSRingo/WeatherKit/releases/latest/download/iRingo.WeatherKit.sgmodule
+    compat_arguments:
+      LogLevel: ERROR
+    enabled: true
+  - url: https://github.com/VirgilClyne/GetSomeFries/raw/main/sgmodule/General.sgmodule
+    enabled: true
+  - url: https://github.com/VirgilClyne/GetSomeFries/raw/main/sgmodule/DNS.sgmodule
+    enabled: true
+  - url: https://github.com/VirgilClyne/GetSomeFries/raw/main/sgmodule/ASN.China.sgmodule
+    enabled: true
+  - url: https://github.com/DualSubs/Spotify/releases/latest/download/DualSubs.Spotify.sgmodule
+    compat_arguments:
+      LogLevel: ERROR
+    enabled: true
+  - url: https://raw.githubusercontent.com/QingRex/LoonKissSurge/refs/heads/main/Surge/Official/%E5%BF%AB%E7%9C%8B%E6%BC%AB%E7%94%BB%E7%AD%BE%E5%88%B0.official.sgmodule
+    enabled: true
+  - url: https://github.com/BiliUniverse/ADBlock/releases/latest/download/BiliBili.ADBlock.sgmodule
+    enabled: true
